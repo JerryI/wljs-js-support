@@ -4,6 +4,7 @@ function __isElement(element) {
   
 class ScopedEval {
   ondestroy = function() {}
+  after = function() {}
   error  = false
     
   constructor(scope, script) {
@@ -23,6 +24,7 @@ class JSCell {
     scope = {}
     createScopedEval = (scope, script) => {return({
       ondestroy: function() {},
+      after: function() {},
       result: Function(`${script}`)
     })}  
     
@@ -46,6 +48,7 @@ class JSCell {
 
       if (__isElement(result)) {
         this.origin.element.appendChild(result);
+        this.scope.after(result);
         return this;
       }
       
@@ -60,6 +63,8 @@ class JSCell {
         ],
         parent: this.origin.element
       });    
+
+      this.scope.after(editor);
       
       return this;
     }

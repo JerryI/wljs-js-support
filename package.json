@@ -1,13 +1,14 @@
 {
   "name": "wljs-js-support",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JS cells support for WLJS Editor",
   "scripts": {
-    "build": "node --max-old-space-size=8192 ./node_modules/.bin/rollup --config rollup.config.mjs"
+    "build": "node --max-old-space-size=8192 ./node_modules/.bin/rollup --config rollup.config.mjs",
+    "restore": "mkdir _temp && cd _temp && git clone https://github.com/JerryI/wljs-js-support && mv wljs-js-support/.git ../.git && cd .. && rm -rf _temp"
   },
   "defaultPackage": true,
   "wljs-meta": {
-    "jsmodule": "dist/kernel.js",
+    "jsmodule": "src/kernel.js",
     "wl": "src/processor.wl"
   },
   "repository": {
