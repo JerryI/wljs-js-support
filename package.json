@@ -1,6 +1,6 @@
 {
   "name": "wljs-js-support",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "JS cells support for WLJS Editor",
   "scripts": {
     "build": "node --max-old-space-size=8192 ./node_modules/.bin/rollup --config rollup.config.mjs",
