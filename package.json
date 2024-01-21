@@ -8,8 +8,8 @@
   },
   "defaultPackage": true,
   "wljs-meta": {
-    "jsmodule": "src/kernel.js",
-    "wl": "src/processor.wl"
+    "frontend" : "src/Frontend.wl",
+    "js": "src/kernel.js"
   },
   "repository": {
     "type": "git",

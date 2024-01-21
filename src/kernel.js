@@ -71,7 +71,7 @@ class JSCell {
   }
   
   window.SupportedLanguages.push({
-    check: (r) => {return(r[0] === '.js')},
+    check: (r) => {return(r[0].match(/\w*\.(js)$/) != null)},
     plugins: [window.javascript()],
     name: window.javascriptLanguage.name
   });
