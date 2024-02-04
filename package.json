@@ -9,7 +9,8 @@
   "defaultPackage": true,
   "wljs-meta": {
     "frontend" : "src/Frontend.wl",
-    "js": "src/kernel.js"
+    "js": "src/kernel.js",
+    "styles": "src/style.css"
   },
   "repository": {
     "type": "git",
