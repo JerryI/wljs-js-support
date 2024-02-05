@@ -10,7 +10,8 @@
   "wljs-meta": {
     "frontend" : "src/Frontend.wl",
     "js": "src/kernel.js",
-    "styles": "src/style.css"
+    "styles": "src/style.css",
+    "category": "Cell types"
   },
   "repository": {
     "type": "git",
