@@ -10,7 +10,7 @@ Begin["`Internal`"]
 
 JSQ[t_Transaction] := (StringMatchQ[t["Data"], ".js\n"~~___] )
 
-evaluator  = StandardEvaluator["Name" -> "JS Evaluator", "InitKernel" -> init, "Pattern" -> (_?JSQ), "Priority"->(4)];
+evaluator  = StandardEvaluator["Name" -> "JS Evaluator", "InitKernel" -> init, "Pattern" -> (_?JSQ), "Priority"->(3)];
 
     StandardEvaluator`ReadyQ[evaluator, k_] := (
         If[! TrueQ[k["ReadyQ"] ] || ! TrueQ[k["ContainerReadyQ"] ],
@@ -18,12 +18,23 @@ evaluator  = StandardEvaluator["Name" -> "JS Evaluator", "InitKernel" -> init, "
             StandardEvaluator`Print[evaluator, "Kernel is not ready"];
             False
         ,
+            Kernel`Init[k, 
+                    Print["Init JS JS JS Kernel (Local)"];
+                    Notebook`Kernel`JSEvaluator = Function[t, 
+
+                        EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Result", <|"Data" -> t["Data"], "Meta" -> Sequence["Display"->"js"] |> ];
+                        EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Finished", True];
+                    ];
+            , "Once"->True];
+
+    
+
             True
         ]
     );
 
 StandardEvaluator`Evaluate[evaluator, k_, t_] := Module[{list},
-    t["Evaluator"] = Notebook`Editor`JSEvaluator;
+    t["Evaluator"] = Notebook`Kernel`JSEvaluator;
     t["Data"] = StringDrop[t["Data"], 4];
 
     StandardEvaluator`Print[evaluator, "Kernel`Submit!"];
@@ -32,14 +43,7 @@ StandardEvaluator`Evaluate[evaluator, k_, t_] := Module[{list},
 
 init[k_] := Module[{},
     Print["Kernel init..."];
-    Kernel`Init[k, 
-        Print["Init js Kernel (Local)"];
-        Notebook`Editor`JSEvaluator = Function[t, 
-           
-            EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Result", <|"Data" -> t["Data"], "Meta" -> Sequence["Display"->"js"] |> ];
-            EventFire[Internal`Kernel`Stdout[ t["Hash"] ], "Finished", True];
-        ];
-    ]
+    
 ]
 
 
